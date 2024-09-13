@@ -1,13 +1,11 @@
 # LitePali
 
-LitePali is a lightweight document retrieval system based on ColPali, optimized for cloud deployment with persistence.
+LitePali is a lightweight document retrieval system based on ColPali, optimized for cloud deployment.
 
 ## Features
 
 - minimal dependencies
 - direct image processing
-- S3-compatible storage for persistence
-- designed for cloud-based systems
 
 ## Quick start
 

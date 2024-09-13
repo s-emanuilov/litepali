@@ -1,0 +1,27 @@
+title: "LitePali - Lightweight ColPali-based retrieval"
+description: "LitePali is a minimalist, efficient implementation of ColPali for image retrieval and indexing, optimized for cloud deployment."
+tagline: "Efficient Image Retrieval, Simplified"
+url: "https://litepali.com"
+theme: jekyll-theme-cayman
+
+logo: /assets/logo.png
+
+author: "Copyright © 2024 Simeon Emanuilov. All rights reserved."
+
+social_links:
+  - { platform: github, user_url: "https://github.com/simeonemanuilov", icon: "fab fa-github" }
+  - { platform: twitter, user_url: "https://twitter.com/s_emanuilov", icon: "fab fa-twitter" }
+  - { platform: linkedin, user_url: "https://www.linkedin.com/in/simeon-emanuilov/", icon: "fab fa-linkedin" }
+  - { platform: google_scholar, user_url: "https://scholar.google.bg/citations?user=clJUDxcAAAAJ&hl=en&oi=ao", icon: "fas fa-graduation-cap" }
+
+# Navigation
+header_pages:
+  - pages/about.md
+  - pages/documentation.md
+  - pages/examples.md
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
