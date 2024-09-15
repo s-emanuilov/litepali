@@ -1,47 +1,28 @@
-baseURL: "https://litepali.com"
-languageCode: "en-us"
 title: "LitePali - Lightweight ColPali-based retrieval"
-theme: "PaperMod"
+description: "LitePali is a minimalist, efficient implementation of ColPali for image retrieval and indexing, optimized for cloud deployment."
+theme: minima
 
-params:
-  description: "LitePali is a minimalist, efficient implementation of ColPali for image retrieval and indexing, optimized for cloud deployment."
-  author: "Simeon Emanuilov"
-  images: ["/assets/logo.png"]
+author:
+  name: "Simeon Emanuilov"
+  email: "simeon.emanuilov@gmail.com"
 
-  profileMode:
-    enabled: true
-    title: "LitePali"
-    subtitle: "Efficient Image Retrieval"
-    imageUrl: "/assets/logo.png"
-    imageTitle: "LitePali Logo"
-    buttons:
-      - name: Docs
-        url: "/docs"
-      - name: GitHub
-        url: "https://github.com/s-emanuilov/litepali"
+social_links:
+  github: s-emanuilov
+  twitter: s_emanuilov
+  linkedin: simeon-emanuilov
 
-  socialIcons:
-    - name: "github"
-      url: "https://github.com/s-emanuilov"
-    - name: "twitter"
-      url: "https://twitter.com/s_emanuilov"
-    - name: "linkedin"
-      url: "https://www.linkedin.com/in/simeon-emanuilov/"
-    - name: "googlescholar"
-      url: "https://scholar.google.bg/citations?user=clJUDxcAAAAJ&hl=en&oi=ao"
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
 
-  # Add GitHub-specific metadata
-  github:
-    repo: "s-emanuilov/litepali"
-    countStars: true
-    countForks: true
-
-
-# Enable syntax highlighting
-pygmentsUseClasses: true
-pygmentsCodeFences: true
-
-# Enable tags and categories
-taxonomies:
-  tag: "tags"
-  category: "categories"
+# Exclude from processing.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
