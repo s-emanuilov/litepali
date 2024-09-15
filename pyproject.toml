@@ -4,18 +4,40 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "litepali"
-version = "0.0.1"
+version = "0.0.2"
 description = "Lightweight ColPali-based retrieval for cloud"
 readme = "README.md"
-authors = [{name = "Simeon Emanuilov", email = "simeon.emanuilov@gmail.com"}]
+authors = [{ name = "Simeon Emanuilov", email = "simeon.emanuilov@gmail.com" }]
 requires-python = ">=3.8"
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+    "Topic :: Text Processing :: Indexing",
+    "Topic :: Software Development :: Libraries :: Python Modules",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-keywords = ["colpali", "image retrieval", "rag"]
+keywords = [
+    "colpali",
+    "image retrieval",
+    "rag",
+    "semantic search",
+    "vision-language-models",
+    "document-ai",
+    "multi-modal",
+    "information retrieval",
+    "machine learning",
+    "cloud-optimized",
+]
 dependencies = [
     "colpali-engine>=0.3.0,<0.4.0",
 ]
@@ -24,6 +46,7 @@ dependencies = [
 "Homepage" = "https://github.com/s-emanuilov/litepali"
 "Website" = "https://litepali.com"
 "Bug Tracker" = "https://github.com/s-emanuilov/litepali/issues"
+
 
 [tool.ruff]
 lint.select = ["E", "F"]
@@ -55,7 +78,7 @@ exclude = [
     "venv",
 ]
 
-line-length = 88
+line-length = 110
 
 lint.dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
