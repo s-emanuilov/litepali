@@ -1,5 +1,6 @@
 import io
 import json
+import warnings
 import zipfile
 from pathlib import Path
 from typing import List, Dict, Optional, Union, Tuple
@@ -7,6 +8,7 @@ from typing import List, Dict, Optional, Union, Tuple
 import torch
 from PIL import Image
 from colpali_engine.models import ColPali, ColPaliProcessor
+from transformers import logging as transformers_logging
 
 
 class ImageFileError(Exception):
@@ -40,14 +42,27 @@ class ImageFile:
 class LitePali:
     def __init__(self, model_name: str = "vidore/colpali-v1.2", device: Optional[str] = None):
         try:
+            self.setup_warning_filters()
             self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
-            self.model = ColPali.from_pretrained(
-                model_name, torch_dtype=torch.bfloat16, device_map=self.device
-            ).eval()
-            self.processor = ColPaliProcessor.from_pretrained(model_name)
+            self.model_name = model_name
+            self.model = None
+            self.processor = None
             self.image_embeddings: List[Tuple[ImageFile, Optional[torch.Tensor]]] = []
         except Exception as e:
             raise LitePaliError(f"Failed to initialize LitePali: {str(e)}")
+
+    @staticmethod
+    def setup_warning_filters():
+        warnings.filterwarnings("ignore", message="The `vocab_size` attribute is deprecated")
+        warnings.filterwarnings("ignore", message="`config.hidden_act` is ignored")
+        transformers_logging.set_verbosity_error()
+
+    def _load_model_and_processor(self):
+        if self.model is None or self.processor is None:
+            self.model = ColPali.from_pretrained(
+                self.model_name, torch_dtype=torch.bfloat16, device_map=self.device
+            ).eval()
+            self.processor = ColPaliProcessor.from_pretrained(self.model_name)
 
     def add(self, image_file: ImageFile) -> None:
         try:
@@ -56,6 +71,7 @@ class LitePali:
             raise LitePaliError(f"Failed to add image file: {str(e)}")
 
     def process(self, batch_size: int = 32) -> None:
+        self._load_model_and_processor()
         unprocessed = [item for item in self.image_embeddings if item[1] is None]
         if not unprocessed:
             print("No new images to process.")
@@ -71,9 +87,12 @@ class LitePali:
                 with torch.no_grad():
                     embeddings = self.model(**batch_images)
 
+                # Move embeddings to CPU for storage
+                embeddings = embeddings.cpu()
+
                 for j, (image_file, _) in enumerate(batch):
                     idx = self.image_embeddings.index((image_file, None))
-                    self.image_embeddings[idx] = (image_file, embeddings[j].cpu())
+                    self.image_embeddings[idx] = (image_file, embeddings[j])
 
                 total_processed += len(batch)
                 print(f"Processed batch {i // batch_size + 1}: {total_processed}/{len(unprocessed)} images")
@@ -88,10 +107,6 @@ class LitePali:
 
     def search(self, query: str, k: int = 5) -> List[Dict[str, Union[ImageFile, float]]]:
         try:
-            batch_query = self.processor.process_queries([query]).to(self.model.device)
-            with torch.no_grad():
-                query_embedding = self.model(**batch_query)
-
             processed_embeddings = [
                 (i, emb) for i, (_, emb) in enumerate(self.image_embeddings) if emb is not None
             ]
@@ -99,13 +114,31 @@ class LitePali:
                 return []
 
             indices, embeddings = zip(*processed_embeddings)
-            image_embeddings = torch.stack(embeddings).to(self.model.device)
+            image_embeddings = torch.stack(embeddings)
+
+            # Only load model and processor if necessary
+            if self.model is None or self.processor is None:
+                self._load_model_and_processor()
+
+            batch_query = self.processor.process_queries([query]).to(self.device)
+            with torch.no_grad():
+                query_embedding = self.model(**batch_query)
+
+            # Move query embedding to CPU if image embeddings are on CPU
+            if image_embeddings.device.type == "cpu":
+                query_embedding = query_embedding.cpu()
+            else:
+                image_embeddings = image_embeddings.to(self.device)
+
             scores = self.processor.score_multi_vector(query_embedding, image_embeddings)[0]
 
             top_k = min(k, len(scores))
             top_indices = scores.argsort(descending=True)[:top_k].tolist()
             results = [
-                {"image": self.image_embeddings[indices[i]][0], "score": float(scores[i])}
+                {
+                    "image": self.image_embeddings[indices[i]][0],
+                    "score": float(scores[i]),
+                }
                 for i in top_indices
             ]
             return results

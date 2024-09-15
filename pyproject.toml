@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "litepali"
-version = "0.0.3"
+version = "0.0.4"
 description = "Lightweight ColPali-based retrieval for cloud"
 readme = "README.md"
 authors = [{ name = "Simeon Emanuilov", email = "simeon.emanuilov@gmail.com" }]
