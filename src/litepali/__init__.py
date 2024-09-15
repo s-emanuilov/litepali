@@ -1,3 +1,3 @@
-from .model import LitePali
+from .model import LitePali, ImageFile
 
-__all__ = ["LitePali"]
+__all__ = ["LitePali", "ImageFile"]
