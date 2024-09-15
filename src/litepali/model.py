@@ -30,8 +30,9 @@ class ImageFile:
         document_id: Optional[str] = None,
         page_id: Optional[str] = None,
         metadata: Optional[Dict] = None,
+        file_validation: Optional[bool] = True,
     ):
-        if not Path(path).exists():
+        if file_validation and not Path(path).exists():
             raise ImageFileError(f"Image file not found: {path}")
         self.path = path
         self.document_id = document_id
@@ -215,6 +216,7 @@ class LitePali:
                     document_id=item["document_id"],
                     page_id=item["page_id"],
                     metadata=item["metadata"],
+                    file_validation=False,
                 )
                 if item["has_embedding"]:
                     embedding = embeddings[embedding_index]
