@@ -1,27 +1,47 @@
+baseURL: "https://litepali.com"
+languageCode: "en-us"
 title: "LitePali - Lightweight ColPali-based retrieval"
-description: "LitePali is a minimalist, efficient implementation of ColPali for image retrieval and indexing, optimized for cloud deployment."
-tagline: "Efficient Image Retrieval, Simplified"
-url: "https://litepali.com"
-theme: jekyll-theme-cayman
+theme: "PaperMod"
 
-logo: /assets/logo.png
+params:
+  description: "LitePali is a minimalist, efficient implementation of ColPali for image retrieval and indexing, optimized for cloud deployment."
+  author: "Simeon Emanuilov"
+  images: ["/assets/logo.png"]
 
-author: "Copyright © 2024 Simeon Emanuilov. All rights reserved."
+  profileMode:
+    enabled: true
+    title: "LitePali"
+    subtitle: "Efficient Image Retrieval"
+    imageUrl: "/assets/logo.png"
+    imageTitle: "LitePali Logo"
+    buttons:
+      - name: Docs
+        url: "/docs"
+      - name: GitHub
+        url: "https://github.com/s-emanuilov/litepali"
 
-social_links:
-  - { platform: github, user_url: "https://github.com/simeonemanuilov", icon: "fab fa-github" }
-  - { platform: twitter, user_url: "https://twitter.com/s_emanuilov", icon: "fab fa-twitter" }
-  - { platform: linkedin, user_url: "https://www.linkedin.com/in/simeon-emanuilov/", icon: "fab fa-linkedin" }
-  - { platform: google_scholar, user_url: "https://scholar.google.bg/citations?user=clJUDxcAAAAJ&hl=en&oi=ao", icon: "fas fa-graduation-cap" }
+  socialIcons:
+    - name: "github"
+      url: "https://github.com/s-emanuilov"
+    - name: "twitter"
+      url: "https://twitter.com/s_emanuilov"
+    - name: "linkedin"
+      url: "https://www.linkedin.com/in/simeon-emanuilov/"
+    - name: "googlescholar"
+      url: "https://scholar.google.bg/citations?user=clJUDxcAAAAJ&hl=en&oi=ao"
 
-# Navigation
-header_pages:
-  - pages/about.md
-  - pages/documentation.md
-  - pages/examples.md
+  # Add GitHub-specific metadata
+  github:
+    repo: "s-emanuilov/litepali"
+    countStars: true
+    countForks: true
 
-# Build settings
-markdown: kramdown
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
+
+# Enable syntax highlighting
+pygmentsUseClasses: true
+pygmentsCodeFences: true
+
+# Enable tags and categories
+taxonomies:
+  tag: "tags"
+  category: "categories"
