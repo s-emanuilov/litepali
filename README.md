@@ -135,6 +135,10 @@ visual elements in documents, making it ideal for complex document retrieval tas
 LitePali is designed to be easy to use and deploy in cloud environments, making it a great choice for researchers and
 developers working on document retrieval systems.
 
+## Support
+
+For support or questions, please contact me.
+
 ## Contributing
 
 Contributions are welcome! Feel free to submit issues or pull requests if you have any improvements or bug fixes.
